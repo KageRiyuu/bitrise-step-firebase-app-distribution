@@ -144,3 +144,9 @@ outputs:
       summary: Link to access build on devce
       description: |
         Link to access build on devce
+  - FIREBASE_BUILD_ID:
+    opts:
+      title: ID of the release
+      summary: ID of the release
+      description: |
+        ID of the release

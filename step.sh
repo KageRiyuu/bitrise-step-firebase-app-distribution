@@ -252,8 +252,11 @@ fi
     eval "${submit_cmd}"
 } 2>&1 | tee -a ./fbd_log.out
 
-build_link=$(grep -E "appdistribution.firebase.google.com"  "./fbd_log.out" | grep -Ev "binaries" | grep -m1 "" | grep -Eo 'https://[^ ]+')
+build_link=$(grep -E "appdistribution.firebase.google.com"  "./fbd_log.out" | grep -Ev "binaries" | grep -m1 "" | grep -Eo 'https://[^ ?]+')
+build_id=$(echo "$build_link" | sed 's/.*\///')
+echo "Build Id: $build_id"
 echo "Build Link: $build_link"
+envman add --key FIREBASE_BUILD_ID --value "$build_id"
 envman add --key FIREBASE_BUILD_LINK --value "$build_link"
 if [ $? -eq 0 ] ; then
     echo_done "Success"
