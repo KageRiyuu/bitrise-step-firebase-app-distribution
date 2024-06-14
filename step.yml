@@ -137,3 +137,10 @@ inputs:
       value_options:
         - "false"
         - "true"
+outputs:
+  - FIREBASE_BUILD_LINK:
+    opts:
+      title: Link to access build on devce
+      summary: Link to access build on devce
+      description: |
+        Link to access build on devce

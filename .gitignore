@@ -3,3 +3,5 @@
 _tmp
 .DS_Store
 firebase-debug.log
+app.ipa
+fbd_log.out

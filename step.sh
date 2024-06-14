@@ -3,6 +3,8 @@ set -e
 
 THIS_SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+echo "Script Dir: $THIS_SCRIPT_DIR"
+
 #=======================================
 # Functions
 #=======================================
@@ -103,6 +105,12 @@ function truncate_release_notes {
 
 #
 # Validate parameters
+
+# Sample input for testing
+# firebase_token="Firebase token"
+# app_path="./app.ipa"
+# app="Fire base app id"
+
 echo_info "Configs:"
 echo_details "* firebase_token: $firebase_token"
 echo_details "* service_credentials_file: $service_credentials_file"
@@ -237,10 +245,15 @@ if [ "${is_debug}" = true ] ; then
     submit_cmd="$submit_cmd --debug"
 fi
 
-echo_details "$submit_cmd"
-echo
+{
+    echo_details "$submit_cmd"
+    echo
 
-eval "${submit_cmd}"
+    eval "${submit_cmd}"
+} 2>&1 | tee -a ./fbd_log.out
+
+build_link=$(grep -E "appdistribution.firebase.google.com"  "./fbd_log.out" | grep -Ev "binaries" | grep -m1 "" | grep -Eo 'https://[^ ]+')
+envman add --key FIREBASE_BUILD_LINK --value "$build_link"
 
 if [ $? -eq 0 ] ; then
     echo_done "Success"
