@@ -253,8 +253,8 @@ fi
 } 2>&1 | tee -a ./fbd_log.out
 
 build_link=$(grep -E "appdistribution.firebase.google.com"  "./fbd_log.out" | grep -Ev "binaries" | grep -m1 "" | grep -Eo 'https://[^ ]+')
+echo "Build Link: $build_link"
 envman add --key FIREBASE_BUILD_LINK --value "$build_link"
-
 if [ $? -eq 0 ] ; then
     echo_done "Success"
 else
